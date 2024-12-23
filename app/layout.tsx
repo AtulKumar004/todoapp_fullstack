@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { UserData } from "./types/user";
+
 import { Nunito } from "next/font/google";
 import { ClerkProvider, auth } from "@clerk/nextjs";
 
@@ -7,6 +9,10 @@ import Sidebar from "./Components/Sidebar/Sidebar";
 import GlobalStyleProvider from "./providers/GlobalStyleProvider";
 import ContextProvider from "./providers/ContextProvider";
 import NextTopLoader from "nextjs-toploader";
+import StyledComponentsRegistry from './registry'
+import AdminSidebar from "./Components/AdminSidebar/AdminSidebar";
+import AdminLayout from "./Layouts/AdminLayout";
+import UserLayout from "./Layouts/UserLayout";
 
 const nunito = Nunito({
   weight: ["400", "500", "600", "700", "800"],
@@ -24,6 +30,32 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const { userId } = auth();
+
+  const userData: UserData = {
+    userId,
+    userRole: "Admin", // This should come from your authentication system
+    phoneNumber: "1111111111",
+    password: "Qwerty@123",
+    stage: "Initial",
+    isActive: true,
+  }
+  const renderLayout = () => {
+    if (!userId) {
+      return (
+        <div className="w-full">
+          {children}
+        </div>
+      );
+    }
+
+    return userData.userRole === 'Admin' ? (
+      <AdminLayout>{children}</AdminLayout>
+    ) : (
+      <UserLayout>{children}</UserLayout>
+    );
+  }
+  
+
 
   return (
     <ClerkProvider>
@@ -43,14 +75,15 @@ export default function RootLayout({
             color="#27AE60"
             easing="cubic-bezier(0.53,0.21,0,1)"
           />
-          <ContextProvider>
-            <GlobalStyleProvider>
-              {userId && <Sidebar />}
-              <div className="w-full">{children}</div>
-            </GlobalStyleProvider>
-          </ContextProvider>
+          <StyledComponentsRegistry>
+            <ContextProvider>
+              {/* <GlobalStyleProvider> */}
+              {renderLayout()}
+              {/* </GlobalStyleProvider> */}
+            </ContextProvider>
+          </StyledComponentsRegistry>
         </body>
       </html>
-    </ClerkProvider>
+   </ClerkProvider>
   );
 }

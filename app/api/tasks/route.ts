@@ -26,14 +26,17 @@ export async function POST(req: Request) {
       });
     }
 
-    const task = await prisma.task.create({
+    const task = await prisma.order.create({
       data: {
+        orderId: "123",
+        status: "pending",
         title,
         description,
         date,
         isCompleted: completed,
         isImportant: important,
-        userId,
+        // userId,
+        stage: "pending",
       },
     });
 
@@ -52,9 +55,9 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "Unauthorized", status: 401 });
     }
 
-    const tasks = await prisma.task.findMany({
+    const tasks = await prisma.order.findMany({
       where: {
-        userId,
+        // userId,
       },
     });
 
@@ -74,7 +77,7 @@ export async function PUT(req: Request) {
       return NextResponse.json({ error: "Unauthorized", status: 401 });
     }
 
-    const task = await prisma.task.update({
+    const task = await prisma.order.update({
       where: {
         id,
       },

@@ -69,7 +69,7 @@ function CreateContent() {
 
   return (
     <CreateContentStyled onSubmit={handleSubmit} theme={theme}>
-      <h1>Create a Task</h1>
+      <h1>Create a Order</h1>
       <div className="input-control">
         <label htmlFor="title">Title</label>
         <input
@@ -144,6 +144,9 @@ const CreateContentStyled = styled.form`
     font-size: clamp(1.2rem, 5vw, 1.6rem);
     font-weight: 600;
   }
+    max-height: 80%;
+    overflow-y: auto;
+
 
   color: ${(props) => props.theme.colorGrey1};
 

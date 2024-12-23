@@ -18,9 +18,11 @@ export const GlobalProvider = ({ children }) => {
 
   const [tasks, setTasks] = useState([]);
 
-  const theme = themes[selectedTheme];
+  const theme = themes[selectedTheme ];
 
   const openModal = () => {
+
+    console.log("openModal");
     setModal(true);
   };
 
@@ -35,15 +37,16 @@ export const GlobalProvider = ({ children }) => {
   const allTasks = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.get("/api/tasks");
+      // const res = await axios.get("/api/tasks");
+      // console.log("allTasks =====>" , res)
 
-      const sorted = res.data.sort((a, b) => {
-        return (
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        );
-      });
+      // const sorted = res.data.sort((a, b) => {
+      //   return (
+      //     new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      //   );
+      // });
 
-      setTasks(sorted);
+      // setTasks(sorted);
 
       setIsLoading(false);
     } catch (error) {
@@ -53,8 +56,8 @@ export const GlobalProvider = ({ children }) => {
 
   const deleteTask = async (id) => {
     try {
-      const res = await axios.delete(`/api/tasks/${id}`);
-      toast.success("Task deleted");
+      // const res = await axios.delete(`/api/tasks/${id}`);
+      // toast.success("Task deleted");
 
       allTasks();
     } catch (error) {
@@ -65,7 +68,7 @@ export const GlobalProvider = ({ children }) => {
 
   const updateTask = async (task) => {
     try {
-      const res = await axios.put(`/api/tasks`, task);
+      // const res = await axios.put(`/api/tasks`, task);
 
       toast.success("Task updated");
 

@@ -14,6 +14,7 @@ interface Props {
 
 function Tasks({ title, tasks }: Props) {
   const { theme, isLoading, openModal, modal } = useGlobalState();
+  
 
   return (
     <TaskStyled theme={theme}>

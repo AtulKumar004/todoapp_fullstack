@@ -32,7 +32,7 @@ const themes = [
     borderColor: "rgba(249,249,249, 0.08)",
     borderColor2: "rgba(249,249,249, 0.08)",
     shadow7: "1px 7px 12px rgba(8, 18, 69, 0.1)",
-    sidebarWidth: "15rem",
+    sidebarWidth: "28rem",
     sidebarCollapsed: "5.4rem",
     fH4: "19px",
     fontSmall: "14px",
@@ -127,5 +127,6 @@ const themes = [
     colorIcons4: "rgba(0,0,0, 0.3)",
     marLRSm: "0 1rem",
   },
+  
 ];
 export default themes;

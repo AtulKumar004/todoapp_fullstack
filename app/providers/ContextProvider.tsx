@@ -16,6 +16,7 @@ function ContextProvider({ children }: Props) {
     }, 250);
   }, []);
 
+
   if (!isReady) {
     return (
       <div className="w-full h-full flex items-center justify-center">
@@ -23,6 +24,8 @@ function ContextProvider({ children }: Props) {
       </div>
     );
   }
+
+  
 
   return (
     <GlobalProvider>

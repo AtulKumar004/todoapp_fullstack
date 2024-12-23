@@ -43,6 +43,8 @@ const ModalStyled = styled.div`
 
   .modal-content {
     margin: 0 1rem;
+    max-height: 80%;
+    overflow-y: auto;
 
     padding: 2rem;
     position: relative;
