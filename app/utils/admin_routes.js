@@ -13,6 +13,12 @@ const adminRoutes = [
     icon: list,
     link: "/employees",
   },
+  {
+    id: 3,
+    title: "Stages",
+    icon: list,
+    link: "/stages",
+  },
  
 ];
 

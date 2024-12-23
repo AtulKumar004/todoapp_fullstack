@@ -5,6 +5,7 @@ import Button from '../Components/Button/Button';
 import Modal from '../Components/Modals/Modal';
 import { useGlobalState } from '../context/globalProvider';
 import CreateContent from '../Components/Modals/CreateContent';
+import CreateStage from '../Components/Modals/CreateStage';
 
 function page() {
   const [page, setPage] = useState(1);
@@ -47,7 +48,8 @@ function page() {
   };
   return (
     <div className='w-full h-full flex flex-col gap-4 p-4'>
-      {modal && <Modal content={<CreateContent />} />}
+      {modal && <Modal content={<CreateStage />} />}
+
       <h1 className='text-2xl font-bold'>Orders</h1>
 
       {/* <div className='flex justify-end cursor-pointer border p-2 rounded-md'>Add Order</div> */}

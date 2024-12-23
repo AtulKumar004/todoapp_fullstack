@@ -1,17 +1,14 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Table from '../Components/Table/Table'
 import Button from '../Components/Button/Button';
 import Modal from '../Components/Modals/Modal';
 import { useGlobalState } from '../context/globalProvider';
 import CreateContent from '../Components/Modals/CreateContent';
 import CreateStage from '../Components/Modals/CreateStage';
-import axios from 'axios';
 
 function page() {
   const [page, setPage] = useState(1);
-
-  console.log("PAGE: ", page);
   const { theme, isLoading, openModal, modal } = useGlobalState();
   const columns = [
     { header: 'S No', accessor: 'sNo' },
@@ -49,28 +46,13 @@ function page() {
     totalPages: 10, // Adjust based on your data
     onPageChange: setPage,
   };
-    const getStages = async () => {
-    console.log("getStages function called");
-    try {
-      console.log("Making API request...");
-      const res = await axios.get("/api/stage");
-      console.log("API Response received:", res.data);
-    } catch (error) {
-      console.error("Error fetching stages:", error);
-    }
-  } 
-
-  useEffect(() => {
-    console.log("USE EFFECT CALLED");
-    getStages();
-  }, []); 
   return (
     <div className='w-full h-full flex flex-col gap-4 p-4'>
       {modal && <Modal content={<CreateStage />} />}
       <h1 className='text-2xl font-bold'>Employees</h1>
 
       {/* <div className='flex justify-end cursor-pointer border p-2 rounded-md'>Add Order</div> */}
-      <Button name="Add Employee"
+      <Button name="Add Stages"
         padding={"0.8rem 2rem"}
         borderRad={"0.8rem"}
         fw={"500"}
