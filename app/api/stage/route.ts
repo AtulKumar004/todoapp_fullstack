@@ -54,6 +54,7 @@ export async function GET(req: Request) {
         const search = url.searchParams.get('search') || '';
         const page = parseInt(url.searchParams.get('page') || '1');
         const status = url.searchParams.get('status') || '';
+        
         const perPage = parseInt(url.searchParams.get('perPage') || PER_PAGE.toString());
 
         const skip = (page - 1) * perPage;
@@ -64,7 +65,7 @@ export async function GET(req: Request) {
             take: perPage,
             where: {
                 title: { contains: search, mode: 'insensitive' },
-                // isActive: true,
+                isActive: status ? true : false,
 
             },
             orderBy: {

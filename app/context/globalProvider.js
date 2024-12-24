@@ -1,7 +1,8 @@
 "use client";
 import React, { createContext, useState, useContext } from "react";
 import themes from "./themes";
-import axios from "axios";
+// import axios from "axios";
+import axios from "@/app/utils/axios";
 import toast from "react-hot-toast";
 import { useUser } from "@clerk/nextjs";
 
@@ -10,6 +11,19 @@ export const GlobalUpdateContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
   const { user } = useUser();
+  const [stageData, setStageData] = useState({
+    data: [],
+    pagination: {
+      per_page: 10,
+      current_page: 1,
+      next_page: 0,
+      previous_page: 0,
+      total_pages: 1,
+      total_count: 10,
+    },
+    message: ""
+  });
+
 
   const [selectedTheme, setSelectedTheme] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +32,7 @@ export const GlobalProvider = ({ children }) => {
 
   const [tasks, setTasks] = useState([]);
 
-  const theme = themes[selectedTheme ];
+  const theme = themes[selectedTheme];
 
   const openModal = () => {
 
@@ -26,6 +40,37 @@ export const GlobalProvider = ({ children }) => {
     setModal(true);
   };
 
+
+  const allStages =  (page = 1,search = "" , isActive = true) => {
+    axios.get('/stage', {
+      params: {
+        page,
+        search,
+        isActive
+      }
+    })
+      .then((res) => {
+        
+        if (res?.status == 200) {
+          setStageData({
+            data: res?.data?.stages,
+            pagination: res?.data?.pagination,
+            message: res?.data?.message
+          });
+
+
+        }
+      })
+      .catch((err) => {
+        console.log("err ====>", err)
+      })
+    
+
+  }   
+
+  // const getAllStagesData = (page: number = 1, search?: string) => {
+   
+  // }
   const closeModal = () => {
     setModal(false);
   };
@@ -104,6 +149,8 @@ export const GlobalProvider = ({ children }) => {
         allTasks,
         collapsed,
         collapseMenu,
+        stageData,
+        allStages
       }}
     >
       <GlobalUpdateContext.Provider value={{}}>
