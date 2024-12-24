@@ -4,6 +4,8 @@ import React from "react";
 interface Props {
   icon?: React.ReactNode;
   name?: string;
+  className?: string;
+  
   type?: "button" | "submit" | "reset";
   padding?: string;
   borderRad?: string;
@@ -16,6 +18,7 @@ interface Props {
 
 const Button = ({ 
   icon, 
+  className,
   name, 
   type = "button",
   padding,
@@ -31,7 +34,7 @@ const Button = ({
       type={type }
       onClick={onClick}
       style={{ padding, borderRadius: borderRad, fontWeight: fw, fontSize: fs, background }}
-      className="flex items-flex-end gap-2 cursor-pointer border rounded-md"
+      className={`inline items-flex-end gap-2 cursor-pointer  rounded-md ${className}`}
     >
       {icon}
       {name || children}

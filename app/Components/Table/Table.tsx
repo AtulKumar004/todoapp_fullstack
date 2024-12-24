@@ -5,22 +5,28 @@ import { useGlobalState } from '@/app/context/globalProvider';
 type Column = {
   header: string;
   accessor: string;
+  render?: (value: any, row?: any) => React.ReactNode;
+  cell?: (value: any, row: any) => React.ReactNode;
 };
 
 type Pagination = {
-  pageSize: number;
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
+  per_page: number;
+  current_page: number;
+  next_page: number;
+  previous_page: number;
+  total_pages: number;
+  total_count: number;
+  // onPageChange: (page: number) => void;
 };
 
 type TableProps = {
   data: any[];
   columns: Column[];
   pagination: Pagination;
+  handlePageChange?: (page: number) => void;
 };
 
-const Table = ({ data, columns, pagination }: TableProps) => {
+const Table = ({ data, columns, pagination ,handlePageChange }: TableProps) => {
   const { theme } = useGlobalState();
 
   return (
@@ -34,10 +40,18 @@ const Table = ({ data, columns, pagination }: TableProps) => {
           </tr>
         </thead>
         <tbody>
-          {data.slice((pagination.currentPage - 1) * pagination.pageSize, pagination.currentPage * pagination.pageSize).map((row, index) => (
+          {data.map((row, index) => (
             <tr key={index}>
               {columns.map((column) => (
-                <td key={`${index}-${column.accessor}`}>{row[column.accessor]}</td>
+                <td key={`${index}-${column.accessor}`}>
+                  {column.cell ? (
+                    column.cell(row[column.accessor], row)
+                  ) : column.render ? (
+                    column.render(row[column.accessor], row)
+                  ) : (
+                    row[column.accessor]
+                  )}
+                </td>
               ))}
             </tr>
           ))}
@@ -46,18 +60,18 @@ const Table = ({ data, columns, pagination }: TableProps) => {
 
       <div className="pagination">
         <button
-          onClick={() => pagination.onPageChange(pagination.currentPage - 1)}
-          disabled={pagination.currentPage === 1}
+          onClick={() => handlePageChange?.(pagination.current_page - 1)}
+          disabled={pagination.current_page === 1}
           className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
         >
           Previous
         </button>
         <span>
-          Page {pagination.currentPage} of {pagination.totalPages}
+          Page {pagination.current_page} of {pagination.total_pages}
         </span>
         <button
-          onClick={() => pagination.onPageChange(pagination.currentPage + 1)}
-          disabled={pagination.currentPage === pagination.totalPages}
+          onClick={() => handlePageChange?.(pagination.current_page + 1)}
+          disabled={pagination.current_page === pagination.total_pages}
           className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
         >
           Next

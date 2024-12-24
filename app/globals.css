@@ -27,7 +27,7 @@ body {
 input,
 textarea,
 button {
-  border: none;
+  /* border: none; */
   outline: none;
   background: transparent;
 }

@@ -31,6 +31,8 @@ export default function RootLayout({
 }) {
   const { userId } = auth();
 
+  console.log("userId ====>", userId)
+
   const userData: UserData = {
     userId,
     userRole: "Admin", // This should come from your authentication system
